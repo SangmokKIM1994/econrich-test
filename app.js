@@ -5,13 +5,12 @@ const dotenv = require("dotenv");
 dotenv.config();
 
 const mysql = require("mysql2");
-const connection = mysql.createConnection({
+const pool = mysql.createPool({
   user: process.env.DBuser,
   password: process.env.DBpassword,
   database: process.env.DBdatabase,
   host: process.env.DBhost,
 });
-
 const app = express();
 const PORT = process.env.PORT;
 
@@ -22,10 +21,13 @@ app.use("/api", router);
 app.listen(PORT, () => {
   console.log(PORT, "포트로 서버가 열렸어요!");
 });
-connection.connect((err) => {
+
+pool.getConnection((err, connection) => {
   if (err) {
-    console.error("MySQL연결 실패", err);
-  } else {
-    console.log("데이터베이스 연결 성공");
+    console.error("MySQL 연결 실패", err);
+    return;
   }
+  console.log("MySQL 연결 성공");
+  console.log("현재 커넥션 개수:", pool._allConnections.length);
+  connection.release();
 });
