@@ -4,6 +4,6 @@ const employeecontroller = require("../controllers/employeeControllers");
 const Employeecontroller = new employeecontroller();
 
 router.get("/current", Employeecontroller.findCurrentInformation);
-// router.get("/history", Employeecontroller.findHistoryInformation);
+router.get("/history", Employeecontroller.findHistoryInformation);
 
 module.exports = router;
