@@ -4,6 +4,6 @@ const departmentcontroller = require("../controllers/departmentControllers");
 const Departmentcontroller = new departmentcontroller();
 
 router.get("/info", Departmentcontroller.departmentInfo);
-// router.patch("/changepay")
+router.patch("/changepay",Departmentcontroller.changePay)
 
 module.exports = router;

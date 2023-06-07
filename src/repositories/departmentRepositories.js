@@ -18,6 +18,28 @@ class DepartmentRepository {
     const [departmentInfo] = await pool.query(query, [departmentid]);
     return departmentInfo;
   };
+
+  findEmployees = async ({ departmentid }) => {
+    const query = `SELECT *
+    FROM employees
+    WHERE department_id = ?`;
+    const [result] = await pool.query(query, [departmentid]);
+    const employees = Array.isArray(result) ? result : [result];
+    return employees;
+  };
+
+  changePay = async ({ employeeId, pay }) => {
+    const query = `UPDATE employees SET salary = ? WHERE employee_id = ?`;
+    await pool.query(query, [pay, employeeId]);
+  };
+
+  findDepartment = async ({ departmentid }) => {
+    const query = `SELECT department_name
+    FROM departments
+    WHERE department_id = ?`;
+    const [department] = await pool.query(query, [departmentid]);
+    return department;
+  };
 }
 
 module.exports = DepartmentRepository;
