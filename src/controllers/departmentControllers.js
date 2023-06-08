@@ -17,10 +17,10 @@ class DepartmentController {
 
   changePay = async (req, res, next) => {
     try {
-      const { departmentid, upOrDawn, percentage } = req.query;
+      const { departmentid, plusOrMinus, percentage } = req.query;
       const pay = await this.DepartmentService.changePay({
         departmentid,
-        upOrDawn,
+        plusOrMinus,
         percentage,
       });
       res.status(200).json({

@@ -5,7 +5,7 @@ class EmployeeService {
   EmployeeRepository = new employeeRepository();
 
   findCurrentInformation = async ({ employeeid }) => {
-    if (typeof employeeid == Number && employeeid.length == 3) {
+    if (100 < employeeid) {
       const currentInformation =
         await this.EmployeeRepository.findCurrentInformation({ employeeid });
       return currentInformation;
@@ -18,15 +18,13 @@ class EmployeeService {
   };
 
   findHistoryInformation = async ({ employeeid }) => {
-    if (typeof employeeid == Number && employeeid.length == 3) {
+    if (100 < employeeid) {
       const employeeInformation =
         await this.EmployeeRepository.findHistoryInformation({
           employeeid,
         });
-      return {
-        currentInformation: employeeInformation.currentInformation,
-        historyInformation: employeeInformation.historyInformation,
-      };
+      return employeeInformation
+      
     } else {
       throw new makeError({
         message: "잘못된 직원 번호 입니다.",

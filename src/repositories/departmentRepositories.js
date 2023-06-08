@@ -16,7 +16,7 @@ class DepartmentRepository {
     JOIN locations l ON d.location_id = l.location_id
     WHERE d.department_id = ?`;
     const [departmentInfo] = await pool.query(query, [departmentid]);
-    return departmentInfo;
+    return departmentInfo[0];
   };
 
   findEmployees = async ({ departmentid }) => {

@@ -20,8 +20,7 @@ class Employeecontroller {
       const employeeInformation =
         await this.EmployeeService.findHistoryInformation({ employeeid });
       res.status(200).json({
-        currentInformation: employeeInformation.currentInformation,
-        historyInformation: employeeInformation.historyInformation,
+        historyInformation: employeeInformation,
       });
     } catch (error) {
       next(error);

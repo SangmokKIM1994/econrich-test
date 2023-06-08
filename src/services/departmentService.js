@@ -5,7 +5,11 @@ class DepartmentService {
   DepartmentRepository = new departmentRepository();
 
   departmentInfo = async ({ departmentid }) => {
-    if (Number(departmentid) >= 10 && Number(departmentid) <= 270) {
+    if (
+      Number(departmentid) >= 10 &&
+      Number(departmentid) <= 270 &&
+      departmentid % 10 === 0
+    ) {
       const departmentInfo = await this.DepartmentRepository.departmentInfo({
         departmentid,
       });
@@ -18,11 +22,11 @@ class DepartmentService {
     }
   };
 
-  changePay = async ({ departmentid, upOrDawn, percentage }) => {
+  changePay = async ({ departmentid, plusOrMinus, percentage }) => {
     if (
       10 <= Number(departmentid) &&
       Number(departmentid) <= 270 &&
-      (upOrDawn === "plus" || upOrDawn === "minus") &&
+      (plusOrMinus === "plus" || plusOrMinus === "minus") &&
       Number(percentage) <= 100
     ) {
       const findEmployees = await this.DepartmentRepository.findEmployees({
@@ -33,10 +37,10 @@ class DepartmentService {
         const employeeId = findEmployees[i].employee_id;
         const salary = findEmployees[i].salary;
         const variableValue = (findEmployees[i].salary * percentage) / 100;
-        if (upOrDawn === "plus") {
+        if (plusOrMinus === "plus") {
           pay = Number(salary) + Number(variableValue);
           await this.DepartmentRepository.changePay({ employeeId, pay });
-        } else if (upOrDawn === "minus") {
+        } else if (plusOrMinus === "minus") {
           pay = Number(salary) - Number(variableValue);
           await this.DepartmentRepository.changePay({ employeeId, pay });
         }
@@ -48,9 +52,9 @@ class DepartmentService {
 
       let message;
 
-      if (upOrDawn === "plus") {
+      if (plusOrMinus === "plus") {
         message = "인상";
-      } else if (upOrDawn === "minus") {
+      } else if (plusOrMinus === "minus") {
         message = "조정";
       }
       return { department: departmentName[0].department_name, message };
